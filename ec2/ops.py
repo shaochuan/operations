@@ -13,6 +13,7 @@ def launch_spot_instance(conn, ami, key_name, security_group_ids, instance_type,
   """
   history = conn.get_spot_price_history(instance_type=instance_type)
   prices = [r.price for r in history]
+  prices.sort()
   bid_price = prices[len(prices) / 2]
   requests = conn.request_spot_instances(price=bid_price,
     key_name=key_name,
